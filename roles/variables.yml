@@ -1,0 +1,41 @@
+#- name: Demo on Variables
+#  hosts: localhost
+#  connection: local
+#  vars:
+#    URL: vars.google.com
+#  tasks:
+#    - name: Print URL
+#      ansible.builtin.debug:
+#      msg: URL -{{ URL}}
+#
+#- name: Demo on Variables
+#  hosts: localhost
+#  connection: local
+#  tasks:
+#    - name: Print URL
+#      ansible.builtin.debug:
+#        msg: URL -{{ URL}}
+#      vars:
+#        URL: tasks.google.com
+#
+#- name: Demo on Variables
+#  hosts: localhost
+#  connection: local
+#  roles:
+#    -sample
+
+- name: Demo on register variables
+  hosts: localhost
+  connection: local
+  become: yes
+  tasks:
+    - name: check the package
+      ansible.builtin.dnf:
+        name: zlib
+        state: installed
+      register: out
+
+- name: print out
+  ansible.builtin.debug:
+    msg: "{{ out }}"
+
